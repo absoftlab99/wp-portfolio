@@ -18,3 +18,23 @@ function t_css_js_file_call(){
 }
 
 add_action('wp_enqueue_scripts', 't_css_js_file_call'); 
+
+/*===================================
+    Website Logo Customization
+=====================================*/
+function ab_customizer_register($wp_customize){
+    $wp_customize->add_section('ab_header_aria', array(
+        'title' =>__('Header Aria', 'portfolio'),
+        'description' => 'Update website logo'
+    ));
+    $wp_customize->add_setting('ab_logo', array(
+        'default' => get_bloginfo('template_directory'). '/img/logo.png',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'ab_logo', array(
+        'label' => 'Logo Upload',
+        'setting' => 'ab_logo',
+        'section' => 'ab_header_aria'
+    )));
+}
+
+add_action('customize_register', 'ab_customizer_register');
